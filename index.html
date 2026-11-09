@@ -19,7 +19,18 @@ a{color:inherit}
 header{position:sticky;top:0;z-index:5;background:rgba(251,247,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
 .logo{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:600;letter-spacing:.5px}
+.logo{text-decoration:none;color:var(--ink)}
 .logo span{color:var(--accent)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+.nav-right{display:flex;align-items:center;gap:10px}
+.burger{display:none;width:42px;height:42px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s,opacity .2s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;flex-direction:column;padding:6px 16px 18px;border-top:1px solid var(--line);background:var(--bg)}
+.mobile-menu a{padding:14px 4px;font-size:18px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+.mm-contact{font-size:13px;color:var(--muted);padding-top:14px}
 .nav-links{display:flex;gap:22px;font-size:14px;font-weight:500}
 .nav-links a{text-decoration:none;color:var(--muted)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:600 15px Manrope,sans-serif;border-radius:999px;padding:13px 22px;background:var(--accent);color:#fff;text-decoration:none;transition:transform .15s,opacity .15s}
@@ -96,6 +107,8 @@ footer{border-top:1px solid var(--line);padding:28px 0 90px;font-size:13px;color
 .toast.show{transform:translateX(-50%) translateY(0)}
 @media (max-width:820px){
   .nav-links{display:none}
+  .burger{display:flex}
+  .mobile-menu.open{display:flex}
   .hero{grid-template-columns:1fr;padding-top:28px;gap:24px}
   .hero-art{aspect-ratio:16/10;border-radius:24px;order:-1}
   h1{font-size:40px}
@@ -109,18 +122,25 @@ footer{border-top:1px solid var(--line);padding:28px 0 90px;font-size:13px;color
 }
 </style>
 </head>
-<body>
+<body id="top">
 
 <div class="demo">Концепт-прототип нового сайта для Kamili Nails · демонстрация, не официальный сайт</div>
 
 <header>
   <div class="wrap nav">
-    <div class="logo">Kamili <span>Nails</span></div>
+    <a href="#top" class="logo" aria-label="Kamili Nails — на главную">Kamili <span>Nails</span></a>
     <nav class="nav-links">
       <a href="#branches">Студии</a><a href="#prices">Цены</a><a href="#book">Запись</a><a href="#reviews">Отзывы</a>
     </nav>
-    <a href="#book" class="btn sm">Записаться</a>
+    <div class="nav-right">
+      <a href="#book" class="btn sm">Записаться</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
   </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#branches">Студии</a><a href="#prices">Цены</a><a href="#book">Онлайн-запись</a><a href="#reviews">Отзывы</a>
+    <div class="mm-contact">Ежедневно до 22:00 · 6 студий в Москве</div>
+  </nav>
 </header>
 
 <main class="wrap">
@@ -305,6 +325,11 @@ $("confirm").onclick=()=>{
   $("msg2").textContent=`Напоминание за 3 часа: ждём вас сегодня в ${st.slot}, ${b.addr}. Если планы изменились — напишите, мы предложим другое время.`;
   $("chat").hidden=false;toast("Демо: запись создана, данные никуда не отправлены");
 };
+const bg=$("burger"),mm=$("mobileMenu");
+function setMenu(o){bg.classList.toggle("open",o);mm.classList.toggle("open",o);bg.setAttribute("aria-expanded",o)}
+bg.onclick=()=>setMenu(!mm.classList.contains("open"));
+mm.querySelectorAll("a").forEach(a=>a.onclick=()=>setMenu(false));
+document.querySelector(".logo").addEventListener("click",()=>setMenu(false));
 renderBranches();renderTabs();renderPrices();renderDays();renderSlots();summary();
 </script>
 </body>
