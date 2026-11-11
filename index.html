@@ -89,6 +89,7 @@ section{padding:48px 0}
 .slot.off{opacity:.35;cursor:not-allowed;text-decoration:line-through}
 .summary .line{display:flex;justify-content:space-between;padding:7px 0;font-size:14.5px;border-bottom:1px dashed var(--line)}
 .summary .line span:first-child{color:var(--muted)}
+.sync{display:inline-block;font-size:12px;font-weight:600;color:var(--ok);background:#e7f5ec;border-radius:999px;padding:4px 10px;margin-bottom:8px}
 .total{display:flex;justify-content:space-between;font-weight:700;font-size:18px;margin:14px 0 18px}
 input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font:15px Manrope,sans-serif;margin-bottom:10px;background:var(--bg)}
 .chat{background:#e7f5ec;border-radius:16px;padding:14px;margin-top:16px;font-size:14px}
@@ -139,7 +140,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 90px;font-size:13px;color
   </div>
   <nav class="mobile-menu" id="mobileMenu">
     <a href="#branches">Студии</a><a href="#prices">Цены</a><a href="#book">Онлайн-запись</a><a href="#reviews">Отзывы</a>
-    <div class="mm-contact">Ежедневно до 22:00 · 6 студий в Москве</div>
+    <div class="mm-contact">Ежедневно до 22:00 · студии в Москве и Котельниках</div>
   </nav>
 </header>
 
@@ -148,13 +149,13 @@ footer{border-top:1px solid var(--line);padding:28px 0 90px;font-size:13px;color
     <div>
       <div class="eyebrow">Сеть студий красоты · Москва</div>
       <h1>Маникюр, волосы и брови — в минуте от метро</h1>
-      <p class="lead">Шесть студий в Москве и Котельниках. Выберите ближайшую, посмотрите точные цены и запишитесь онлайн за 30 секунд.</p>
+      <p class="lead">Студии сети в Москве и Котельниках. Выберите ближайшую, посмотрите точные цены и запишитесь онлайн за 30 секунд.</p>
       <div class="hero-ctas">
         <a href="#book" class="btn">Записаться онлайн</a>
         <a href="#branches" class="btn ghost">Найти студию</a>
       </div>
       <div class="trust">
-        <div><b>6</b>студий</div>
+        <div><b>YCLIENTS</b>онлайн-запись</div>
         <div><b>1 мин</b>от метро</div>
         <div><b>до 22:00</b>ежедневно</div>
       </div>
@@ -192,7 +193,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 90px;font-size:13px;color
 
   <section id="book">
     <h2>Онлайн-запись</h2>
-    <p class="sub">Подтверждение и напоминание приходят в WhatsApp или Telegram.</p>
+    <p class="sub">Запись идёт напрямую в ваш YCLIENTS: расписание мастеров и база клиентов остаются там же, менять систему не нужно. Подтверждение и напоминание приходят в WhatsApp или Telegram.</p>
     <div class="book">
       <div class="panel">
         <div class="step">1 · День</div>
@@ -205,6 +206,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 90px;font-size:13px;color
       </div>
       <div class="panel summary">
         <div class="step">Ваша запись</div>
+        <div class="sync">● Синхронизировано с YCLIENTS</div>
         <div class="line"><span>Студия</span><span id="sBranch">—</span></div>
         <div class="line"><span>Услуги</span><span id="sServ">не выбраны</span></div>
         <div class="line"><span>Когда</span><span id="sWhen">—</span></div>
@@ -244,6 +246,7 @@ const branches=[
   {id:"pm",metro:"Проспект Мира",color:"#8d5b2d",addr:"пр-т Мира, 61, стр. 2, 3 этаж",walk:"10 мин от метро"},
   {id:"kol",metro:"Коломенская",color:"#2db84b",addr:"Судостроительная ул., 17, 1 этаж",walk:"10 мин от метро"},
   {id:"kop",metro:"Коптево",color:"#e4007c",addr:"Кронштадтский б-р, 47, 1 этаж",walk:"20 мин от метро"},
+  {id:"tag",metro:"Таганская",color:"#8d5b2d",addr:"Таганская ул., 1/2, стр. 2",walk:"рядом с метро"},
   {id:"kot",metro:"Котельники",color:"#943e90",addr:"Котельники, ул. Строителей, 5",walk:"9 мин от метро"}
 ];
 const services={
@@ -323,7 +326,7 @@ $("confirm").onclick=()=>{
   const dl=new Date(st.day).toLocaleDateString("ru-RU",{day:"numeric",month:"long"});
   $("msg1").textContent=`${name}, вы записаны в Kamili Nails (${b.metro}) на ${dl} в ${st.slot}. Сумма: ${$("sTotal").textContent}. Перенести или отменить — ответьте на это сообщение.`;
   $("msg2").textContent=`Напоминание за 3 часа: ждём вас сегодня в ${st.slot}, ${b.addr}. Если планы изменились — напишите, мы предложим другое время.`;
-  $("chat").hidden=false;toast("Демо: запись создана, данные никуда не отправлены");
+  $("chat").hidden=false;toast("Демо: в рабочей версии запись появится в YCLIENTS");
 };
 const bg=$("burger"),mm=$("mobileMenu");
 function setMenu(o){bg.classList.toggle("open",o);mm.classList.toggle("open",o);bg.setAttribute("aria-expanded",o)}
